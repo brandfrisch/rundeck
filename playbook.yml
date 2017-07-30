@@ -1,0 +1,8 @@
+---
+- hosts: all
+  vars:
+    rundeck_address: '0.0.0.0'
+    rundeck_plugins: https://github.com/Batix/rundeck-ansible-plugin/releases/download/2.0.2/ansible-plugin-2.0.2.jar
+  roles:
+    - java
+    - rundeck

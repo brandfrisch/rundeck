@@ -1,0 +1,19 @@
+---
+# tasks file for debian repository
+
+- name: Add Bintray GPG key for rundeck repo
+  apt_key:
+    id: 379CE192D401AB61
+    url: https://bintray.com/user/downloadSubjectPublicKey?username=bintray
+    state: present
+
+- name: Add Debian Build GPG key
+  apt_key:
+    id: 85E9DBC74FCB329EDEDADD2E90770E1BE2D1065B
+    url: http://rundeck.org/keys/BUILD-GPG-KEY-Rundeck.org.key
+    state: present
+
+- name: Add Debian APT repository on Bintray
+  apt_repository:
+    repo: 'deb http://dl.bintray.com/rundeck/rundeck-deb /'
+    state: present

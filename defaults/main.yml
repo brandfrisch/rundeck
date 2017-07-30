@@ -1,0 +1,6 @@
+---
+# defaults file for rundeck
+
+rundeck_plugins: []
+rundeck_address: '127.0.0.1'
+rundeck_config: rundeck-config.properties.j2

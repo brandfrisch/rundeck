@@ -1,2 +1,2 @@
 ---
-- src: git+ssh://git@github.com/brandfrisch/java.git
+- src: git+http://git@github.com/brandfrisch/java.git

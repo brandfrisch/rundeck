@@ -3,4 +3,6 @@
 
 rundeck_plugins: []
 rundeck_address: '127.0.0.1'
-rundeck_config: rundeck-config.properties.j2
+
+rundeck_configs:
+  - { src: rundeck-config.properties.j2, dest: '/etc/rundeck/rundeck-config.properties' }

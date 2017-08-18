@@ -11,13 +11,15 @@
 - include: debian_systemd.yml
   when: ansible_os_family == 'Debian'
 
-- name: write rundeck config
+- name: Write rundeck config
   template:
-    src: "{{ rundeck_config }}"
-    dest: /etc/rundeck/rundeck-config.properties
+    src: "{{ item.src }}"
+    dest: "{{ item.dest }}"
     owner: root
     group: root
     mode: 0644
+  with_items:
+    - "{{ rundeck_configs }}"
   notify:
     - restart rundeck
 
@@ -27,7 +29,7 @@
     enabled: yes
     state: started
 
-- name: download rundeck plugins
+- name: Download rundeck plugins
   get_url:
     dest: "/var/lib/rundeck/libext/{{ item.split('/') | last }}"
     url: "{{ item }}"

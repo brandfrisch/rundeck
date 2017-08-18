@@ -1,13 +1,12 @@
 ---
 # tasks file for debian systemd
 
-
-- name: remove System V init.d script
+- name: Remove System V init.d script
   file:
     path: /etc/init.d/rundeckd
     state: absent
 
-- name: add systemd service helper
+- name: Add systemd service helper
   template:
     src: rundeck-start.bash.j2
     dest: /usr/bin/rundeck-start
@@ -17,7 +16,7 @@
   notify:
     - restart rundeck
 
-- name: add systemd service unit
+- name: Add systemd service unit
   template:
     src: rundeckd.service.j2
     dest: /etc/systemd/system/rundeckd.service

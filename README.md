@@ -1,4 +1,4 @@
-rundeck [![Build Status](https://travis-ci.org/brandfrisch/rundeck.svg?branch=master)](https://travis-ci.org/brandfrisch/rundeck)
+rundeck
 =========
 
 This is a rule to setup rundeck on a unix system

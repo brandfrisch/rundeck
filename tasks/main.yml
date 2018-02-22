@@ -1,15 +1,50 @@
 ---
 # tasks file for rundeck
 
-- include: "{{ ansible_os_family | lower }}_repository.yml"
+- name: Add Bintray GPG key for rundeck repo
+  apt_key:
+    id: 379CE192D401AB61
+    url: https://bintray.com/user/downloadSubjectPublicKey?username=bintray
+    state: present
+
+- name: Add Debian Build GPG key
+  apt_key:
+    id: 85E9DBC74FCB329EDEDADD2E90770E1BE2D1065B
+    url: http://rundeck.org/keys/BUILD-GPG-KEY-Rundeck.org.key
+    state: present
+
+- name: Add Debian APT repository on Bintray
+  apt_repository:
+    repo: 'deb http://dl.bintray.com/rundeck/rundeck-deb /'
+    state: present
 
 - name: Install from repository
   package:
     name: rundeck
     state: present
 
-- include: debian_systemd.yml
-  when: ansible_os_family == 'Debian'
+- name: Remove System V init.d script
+  file:
+    path: /etc/init.d/rundeckd
+    state: absent
+
+- name: Add systemd service helper
+  template:
+    src: rundeck-start.bash.j2
+    dest: /usr/bin/rundeck-start
+    owner: root
+    group: root
+    mode: 0755
+  notify:
+    - restart rundeck
+
+- name: Add systemd service unit
+  template:
+    src: rundeckd.service.j2
+    dest: /etc/systemd/system/rundeckd.service
+    owner: root
+    group: root
+    mode: 0644
 
 - name: Write rundeck config
   template:

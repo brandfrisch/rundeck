@@ -13,9 +13,6 @@ docker:
       image_version: 'latest'
       command: /lib/systemd/systemd
       privileged: true
-    - name: rundeck-centos-6-9
-      image: brandfrisch/centos-6
-      image_version: latest
 
 verifier:
   name: goss

@@ -2,12 +2,25 @@
 
 - hosts: all
   gather_facts: true
-
-  pre_tasks:
-
-    - name: set distro-specific variables
-      include_vars: "{{ ansible_os_family | lower }}.yml"
-      ignore_errors: true
+  vars:
+    goss:
+      package:
+        rundeck:
+          installed: true
+      service:
+        rundeckd:
+          enabled: true
+          running: true
+      user:
+        rundeck:
+          exists: true
+          groups:
+          - rundeck
+          home: /var/lib/rundeck
+          shell: /bin/false
+      group:
+        rundeck:
+          exists: true
 
   post_tasks:
 

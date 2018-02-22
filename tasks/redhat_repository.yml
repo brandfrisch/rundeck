@@ -1,7 +1,0 @@
----
-# tasks file for redhat repository
-
-- name: Get rundeck repository rpm
-  yum:
-    name: http://repo.rundeck.org/latest.rpm
-    state: present

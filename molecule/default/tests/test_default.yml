@@ -1,0 +1,18 @@
+---
+package:
+  rundeck:
+    installed: true
+service:
+  rundeckd:
+    enabled: true
+    running: true
+user:
+  rundeck:
+    exists: true
+    groups:
+      - rundeck
+    home: /var/lib/rundeck
+    shell: /bin/false
+group:
+  rundeck:
+    exists: true

@@ -3,41 +3,64 @@ version: 2
 jobs:
   build:
 
-    docker:
-      - image: docker:stable
+    machine:
+      enabled: true
 
     working_directory: ~/rundeck
 
     steps:
-      - setup_remote_docker:
-          docker_layer_caching: true
-
       - checkout:
           path: ~/rundeck
 
       - run:
-          name: "Install tools"
-          command: "apk add --update python python-dev py-pip build-base
-                    openssl-dev libffi-dev linux-headers"
+          name: "update"
+          command: |
+            sudo apt-get update
+
+      - run:
+          name: "install tools"
+          command: >
+            sudo apt-get install -yq
+            apt-transport-https
+            build-essential curl git
+            software-properties-common
+
+      - run:
+          name: "install nodejs, npm & semantic-release"
+          command: |
+            sudo apt-get install -yq nodejs npm
+            npm install -g semantic-release@13
+
+      # - run:
+      #     name: "install ruby & fpm"
+      #     command: |
+      #       sudo apt-get install -yq ruby-dev ruby libffi-dev
+      #       gem install fpm --no-ri --no-rdoc
+
+      - run:
+          name: "install python & tools"
+          command: |
+            sudo apt-get install -yq python python-pip
+            pip install --upgrade pip
+            pip install virtualenv
 
       - restore_cache:
           keys:
-            - v1-dependencies-{{ checksum "requirements.txt" }}
-            - v1-dependencies-
+            - v4-dependencies-{{ checksum "requirements.txt" }}
 
       - run:
-          name: "Install virtualenv"
+          name: "Install python dependencies"
           command: |
-            pip install virtualenv
             virtualenv ~/.venv
             source ~/.venv/bin/activate
             pip install -r requirements.txt
+            deactivate
 
       - save_cache:
           paths:
             - ~/.venv
             - ~/.cache/pip
-          key: v1-dependencies-{{ checksum "requirements.txt" }}
+          key: v4-dependencies-{{ checksum "requirements.txt" }}
 
       - run:
           name: "run tests"

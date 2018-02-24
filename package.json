@@ -1,0 +1,27 @@
+{
+  "name": "rundeck",
+  "version": "1.0.0",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git+ssh://github.com/brandfrisch/rundeck.git"
+  },
+  "author": "Alexander Jaeger",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/brandfrisch/rundeck/issues"
+  },
+  "homepage": "https://github.com/brandfrisch/rundeck#readme",
+  "release": {
+    "verifyConditions": [],
+    "publish": [
+      {
+        "path": "@semantic-release/github"
+      }
+    ]
+  },
+  "devDependencies": {
+    "@semantic-release/exec": "^2.0.1",
+    "semantic-release": "^13.4.1"
+  }
+}
